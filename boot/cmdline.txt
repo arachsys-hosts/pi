@@ -1,0 +1,1 @@
+loglevel=2 root=/dev/sda2 rootwait

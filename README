@@ -1,0 +1,86 @@
+System info
+===========
+
+pi is a Raspberry Pi 4B, with a 4-core BCM2711 Cortex-A72 SoC, integrated
+VideoCore 6 GPU, 4GB RAM, Broadcom gigabit NIC, BCM43455 wifi and a 224GB
+USB3-attached-SCSI SSD.
+
+The SSD is MBR partitioned:
+
+  Device     Boot  Start       End   Sectors   Size Id Type
+  /dev/sda1         2048    526335    524288   256M  c W95 FAT32 (LBA)
+  /dev/sda2       526336 468877311 468350976 223.3G 83 Linux
+
+with /dev/sda1 as /boot (vfat) and /dev/sda2 as / (ext4).
+
+See boot/config.txt and boot/cmdline.txt for the bootloader config and
+kernel command line respectively.
+
+After building the kernel, install linux/arch/arm64/boot/Image.gz and
+linux/arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dtb as /boot/linux.img
+and /boot/rpi4b.dtb respectively.
+
+We use a 1G zram device as swap to limit SSD wear, and run
+
+  echo -n unmap >/sys/block/sda/device/scsi_disk/*/provisioning_mode
+
+early in /etc/init to activate TRIM.
+
+The Pi 4B lacks an RTC, so we try to keep the clock monotonic until NTP
+sync takes over with
+
+  if STAMP=$(stat -c %Y /var/lib/ntpd.drift); then
+    date -s "@$STAMP"
+  fi >/dev/null 2>&1
+
+on boot and
+
+  touch -c /var/lib/ntpd.drift && sync
+
+on shutdown.
+
+
+Updating the bootloader EEPROM
+------------------------------
+
+To update the EEPROM from an SD card, copy recovery.bin, pieeprom.bin and
+vl805.bin from
+
+  https://github.com/raspberrypi/rpi-eeprom/tree/master/firmware/stable
+
+to the first partition (vfat format) and generate checksums with
+
+  sha256sum pieeprom.bin | cut -d ' ' -f 1 >pieeprom.sig
+  sha256sum vl805.bin | cut -d ' ' -f 1 >vl805.sig
+  date -u "+ts: %s" >>pieeprom.sig
+
+Booting from this card will update the EEPROM before halting. Green HDMI
+output and a rapidly-flashing green activity LED indicates success. Red
+HDMI output indicates failure, and an error code is displayed via the
+activity LED.
+
+To update the EEPROM from the USB SSD, copy pieeprom.bin and vl805.bin to
+/boot/pieeprom.upd and /boot/vl805.bin and generate checksums with
+
+  sha256sum /boot/pieeprom.upd | cut -d ' ' -f 1 >/boot/pieeprom.sig
+  sha256sum /boot/vl805.bin | cut -d ' ' -f 1 >/boot/vl805.sig
+  date -u "+ts: %s" >>/boot/pieeprom.sig
+
+The bootloader will update itself from these files on the next reboot if
+they differ from the version already in EEPROM. 
+
+
+Upstream firmware binaries
+--------------------------
+
+The GPU binaries boot/start4.elf and boot/fixup4.dat are obtained from
+
+  https://github.com/raspberrypi/firmware/tree/master/boot
+
+The firmware/brcm/brcmfmac43455-sdio.* files are obtained from
+
+  https://github.com/RPi-Distro/firmware-nonfree/tree/master/brcm
+
+The firmware/regulatory.db database is obtained from
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git

@@ -1,0 +1,7 @@
+arm_64bit=1
+arm_freq=2000
+gpu_freq=750
+gpu_mem=64
+hdmi_force_hotplug=1
+kernel=linux.img
+device_tree=rpi4b.dtb

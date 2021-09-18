@@ -18,7 +18,9 @@ kernel command line respectively.
 
 After building the kernel, install linux/arch/arm64/boot/Image.gz and
 linux/arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dtb as /boot/linux.img
-and /boot/rpi4b.dtb respectively.
+and /boot/rpi4b.dtb respectively. To cross-compile the kernel, use
+
+  make ARCH=arm64 CROSS_COMPILE=aarch64-linux-musl-
 
 We use a 1G zram device as swap to limit SSD wear, and run
 

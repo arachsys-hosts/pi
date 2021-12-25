@@ -2,7 +2,7 @@ System info
 ===========
 
 pi is a Raspberry Pi 4B, with a 4-core BCM2711 Cortex-A72 SoC, integrated
-VideoCore 6 GPU, 4GB RAM, Broadcom gigabit NIC, BCM43455 wifi and a 224GB
+VideoCore 6 GPU, 8GB RAM, Broadcom gigabit NIC, BCM43455 wifi and a 224GB
 USB3-attached-SCSI SSD.
 
 The SSD is MBR partitioned:
@@ -31,9 +31,9 @@ early in /etc/init to activate TRIM.
 The Pi 4B lacks an RTC, so we try to keep the clock monotonic until NTP
 sync takes over with
 
-  if STAMP=$(stat -c %Y /var/lib/ntpd.drift); then
-    date -s "@$STAMP"
-  fi >/dev/null 2>&1
+  if [[ -f /var/lib/ntpd.drift ]]; then
+    date -s $(stat -c @%Z /var/lib/ntpd.drift) >/dev/null
+  fi
 
 on boot and
 

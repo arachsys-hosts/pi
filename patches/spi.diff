@@ -1,0 +1,45 @@
+diff --git a/arch/arm/boot/dts/bcm2711-rpi-4-b.dts b/arch/arm/boot/dts/bcm2711-rpi-4-b.dts
+index 443241204..588744ea2 100644
+--- a/arch/arm/boot/dts/bcm2711-rpi-4-b.dts
++++ b/arch/arm/boot/dts/bcm2711-rpi-4-b.dts
+@@ -240,3 +240,40 @@ &vec {
+ &wifi_pwrseq {
+ 	reset-gpios = <&expgpio 1 GPIO_ACTIVE_LOW>;
+ };
++
++&spi {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
++	cs-gpios = <&gpio 8 1>, <&gpio 7 1>;
++	dmas = <&dma 6>, <&dma 7>;
++	dma-names = "tx", "rx";
++
++	spidev0: spidev@0{
++		compatible = "lwn,bk4";
++		reg = <0>;	/* CE0 */
++		#address-cells = <1>;
++		#size-cells = <0>;
++		spi-max-frequency = <125000000>;
++	};
++
++	spidev1: spidev@1{
++		compatible = "lwn,bk4";
++		reg = <1>;	/* CE1 */
++		#address-cells = <1>;
++		#size-cells = <0>;
++		spi-max-frequency = <125000000>;
++	};
++};
++
++&gpio {
++	spi0_pins: spi0_pins {
++		brcm,pins = <9 10 11>;
++		brcm,function = <BCM2835_FSEL_ALT0>;
++	};
++
++	spi0_cs_pins: spi0_cs_pins {
++		brcm,pins = <8 7>;
++		brcm,function = <BCM2835_FSEL_GPIO_OUT>;
++	};
++};

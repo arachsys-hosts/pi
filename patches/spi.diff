@@ -2,7 +2,7 @@ diff --git a/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts b/arch/arm/boot/dts/
 index d5f882323..40714d965 100644
 --- a/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts
 +++ b/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts
-@@ -241,3 +241,40 @@ &vec {
+@@ -270,3 +270,40 @@ &vec {
  &wifi_pwrseq {
  	reset-gpios = <&expgpio 1 GPIO_ACTIVE_LOW>;
  };

@@ -53,7 +53,7 @@ start() {
   syslogd -k
   daemon -p /run/iwd.pid -r -w /dev/log iwd
   ssh-keygen -A && $(type -P sshd)
-  daemon -w /run/resolv.conf ntpd -p /run/ntpd.pid
+  ntpd -p /run/ntpd.pid -s
   test -w / && users start
 
   trap 'exec "$0" stop reboot' INT

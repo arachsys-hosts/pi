@@ -7,11 +7,11 @@ dtc
 e2fsprogs
 file
 flex
+fping
 fzf
 git
 i2c-tools
 iproute2
-iputils-ping
 iw
 iwd
 kakoune

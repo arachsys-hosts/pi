@@ -25,9 +25,12 @@ openssh
 perl
 python
 rsync
+rust
 shadow
 strace
+tcpdump
 tinymbim
 tmux
+ucom
 wireguard
 zoneinfo

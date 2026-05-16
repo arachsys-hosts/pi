@@ -1,7 +1,6 @@
 bc
 bison
 build
-dnsmasq
 dosfstools
 dtc
 e2fsprogs
@@ -10,10 +9,12 @@ flex
 fping
 fzf
 git
+go
 i2c-tools
 iproute2
 iw
 iwd
+jq
 kakoune
 ldns-tools
 libelf
@@ -29,8 +30,8 @@ rust
 shadow
 strace
 tcpdump
-tinymbim
 tmux
+totp
 ucom
 wireguard
 zoneinfo

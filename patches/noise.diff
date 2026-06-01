@@ -1,8 +1,8 @@
 diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index ff41aa565..112b0c6cb 100644
+index fec9329e..42349598 100644
 --- a/drivers/mmc/host/sdhci.c
 +++ b/drivers/mmc/host/sdhci.c
-@@ -1744,7 +1744,6 @@ static bool sdhci_send_command_retry(struct sdhci_host *host,
+@@ -1768,7 +1768,6 @@ static bool sdhci_send_command_retry(struct sdhci_host *host,
  			pr_err("%s: Controller never released inhibit bit(s).\n",
  			       mmc_hostname(host->mmc));
  			sdhci_err_stats_inc(host, CTRL_TIMEOUT);

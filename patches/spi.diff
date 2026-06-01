@@ -1,5 +1,5 @@
 diff --git a/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts b/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts
-index d5f882323..40714d965 100644
+index 353bb50c..cf6f6675 100644
 --- a/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts
 +++ b/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts
 @@ -270,3 +270,40 @@ &vec {
